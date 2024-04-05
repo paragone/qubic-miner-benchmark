@@ -115,7 +115,7 @@ async fn write_to_bat(rqiner:&str, args: &Vec<&str>) -> Result<(), std::io::Erro
     let command_line = format!("{} {}", rqiner, args.join(" "));
     file.write_all(command_line.as_bytes()).await?;
     file.write_all(b"\n").await?;
-
+    
     Ok(())
 }
 
@@ -130,6 +130,7 @@ async fn write_to_sh(rqiner:&str, args: &Vec<&str>) -> Result<(), std::io::Error
    file.write_all(command_line.as_bytes()).await?;
    file.write_all(b"\n").await?;
 
+   add_executable_permission("run_max.sh")?;
    Ok(())
 }
 pub  struct Solution {
