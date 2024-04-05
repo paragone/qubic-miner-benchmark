@@ -1,5 +1,5 @@
-
-
+use std::fs;
+use std::fs::Permissions;
 use tokio::fs::File;
 use tokio::io::AsyncWriteExt;
 use tokio::runtime::Runtime;
@@ -33,6 +33,22 @@ const UPDATE_LIST_WIN:[&'static str; 9] =  ["rqiner-x86.exe",
                                             "rqiner-x86-znver3.exe", 
                                             "rqiner-x86-znver4.exe"
                                         ];
+
+fn add_executable_permission(file_path: &str) -> std::io::Result<()> {
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+
+        let metadata = fs::metadata(file_path)?;
+        let mut permissions = metadata.permissions();
+
+        // 设置用户、组和其他用户的执行权限
+        permissions.set_mode(permissions.mode() | 0o111);
+
+        fs::set_permissions(file_path, permissions)?;
+    }
+    Ok(())
+}
 
 // 函数用于执行外部命令并匹配算力
 fn execute_and_match(program_name: &str, args: &Vec<&str>, duration: u64) -> Result<Option<f64>, String> {
@@ -197,6 +213,7 @@ impl Solution {
                 while let Some(chunk) = response.chunk().await? {
                     file.write_all(&chunk).await?;
                 }
+                add_executable_permission(file_name);
                 Ok::<_, Box<dyn std::error::Error + Send + Sync>>(())
             });
             handles.push(handle);
