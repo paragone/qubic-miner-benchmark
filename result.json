@@ -1,0 +1,22 @@
+[
+  {
+    "average": 320.84,
+    "rqiner": "rqiner-x86-broadwell.exe"
+  },
+  {
+    "average": 312.64,
+    "rqiner": "rqiner-x86-haswell.exe"
+  },
+  {
+    "average": 321.86,
+    "rqiner": "rqiner-x86-znver2.exe"
+  },
+  {
+    "average": 314.84,
+    "rqiner": "rqiner-x86-znver3.exe"
+  },
+  {
+    "average": 320.67,
+    "rqiner": "rqiner-x86-znver4.exe"
+  }
+]
