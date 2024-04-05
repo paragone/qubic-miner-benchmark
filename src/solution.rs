@@ -126,7 +126,7 @@ async fn write_to_sh(rqiner:&str, args: &Vec<&str>) -> Result<(), std::io::Error
    // 写入批处理命令
    file.write_all(b"#/bin/bash\n").await?;
 
-   let command_line = format!("{} {}", rqiner, args.join(" "));
+   let command_line = format!("./{} {}", rqiner, args.join(" "));
    file.write_all(command_line.as_bytes()).await?;
    file.write_all(b"\n").await?;
 
